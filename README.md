@@ -1,2 +1,2 @@
 # AR-Examples
-http://ktparent-me.github.io/AR-Examples/Globe.html
+http://ktparent-me.github.io/AR-Examples/globe.html
