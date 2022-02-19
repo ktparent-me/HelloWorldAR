@@ -126,12 +126,13 @@ function initialize()
 	let pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
 	pointLight.position.set(0.5,3,2);
 	// create a mesh to help visualize the position of the light
-	pointLight.add( 
-		new THREE.Mesh( 
-			new THREE.SphereBufferGeometry( 0.05, 16,8 ), 
-			new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.0 }) 
-		) 
-	);
+	//pointLight.add( 
+	//	new THREE.Mesh( 
+	//		new THREE.SphereBufferGeometry( 0.05, 16,8 ), 
+	//		new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.0 }) 
+	//	) 
+	//);
+	
 	markerRoot1.add( pointLight );
 }
 
