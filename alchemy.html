@@ -28,9 +28,9 @@ var scene, camera, renderer, clock, deltaTime, totalTime;
 
 var arToolkitSource, arToolkitContext;
 
-var markerRoot1, markerRoot2;
+var markerRootA, markerRootB, markerRootC, markerRootKanji;
 
-var mesh1;
+var meshA, meshB, meshC, meshKanji;
 
 initialize();
 animate();
@@ -107,30 +107,83 @@ function initialize()
 	////////////////////////////////////////////////////////////
 
 	let loader = new THREE.TextureLoader();
-	let texture = loader.load( 'images/border.png' );
+	let texture = loader.load( 'images/border.png', render );
 		
-	let patternArray = ["letterA", "letterB", "letterC", "letterD", "letterF", "kanji", "hiro"];
-	let colorArray   = [0xff0000, 0xff8800, 0xffff00, 0x00cc00, 0x0000ff, 0xcc00ff, 0xcccccc];
-	for (let i = 0; i < 7; i++)
-	{
-		let markerRoot = new THREE.Group();
-		scene.add(markerRoot);
-		let markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-			type : 'pattern', patternUrl : "data/" + patternArray[i] + ".patt",
+	// let patternArray = ["letterA", "letterB", "letterC", "letterD", "letterF", "kanji", "kanji"];
+	// let colorArray   = [0xff0000, 0xff8800, 0xffff00, 0x00cc00, 0x0000ff, 0xcc00ff, 0xcccccc];
+	// for (let i = 0; i < 7; i++)
+	// {
+		markerRootA = new THREE.Group();
+		scene.add(markerRootA);
+		let markerControlsA = new THREEx.ArMarkerControls(arToolkitContext, markerRootA, {
+			type : 'pattern', patternUrl : "data/letterA.patt" ,
 		});
 	
-		let mesh = new THREE.Mesh( 
+		let meshA = new THREE.Mesh( 
 			new THREE.CubeGeometry(1.25,1.25,1.25), 
-			new THREE.MeshBasicMaterial({color:colorArray[i], map:texture, transparent:true, opacity:0.5}) 
+			new THREE.MeshBasicMaterial({color:0xFF0000, map:texture, transparent:true, opacity:0.5}) 
 		);
-		mesh.position.y = 1.25/2;
-		markerRoot.add( mesh );
-	}
+		meshA.position.y = 1.25/2;
+		markerRootA.add( meshA );
+
+		markerRootB = new THREE.Group();
+		scene.add(markerRootB);
+		let markerControlsB = new THREEx.ArMarkerControls(arToolkitContext, markerRootB, {
+			type : 'pattern', patternUrl : "data/letterB.patt" ,
+		});
+	
+		let meshB = new THREE.Mesh( 
+			new THREE.CubeGeometry(1.25,1.25,1.25), 
+			new THREE.MeshBasicMaterial({color:0x00FF00, map:texture, transparent:true, opacity:0.5}) 
+		);
+		meshB.position.y = 1.25/2;
+		markerRootB.add( meshB );
+
+		markerRootC = new THREE.Group();
+		scene.add(markerRootC);
+		let markerControlsC = new THREEx.ArMarkerControls(arToolkitContext, markerRootC, {
+			type : 'pattern', patternUrl : "data/letterC.patt" ,
+		});
+	
+		let meshC = new THREE.Mesh( 
+			new THREE.CubeGeometry(1.25,1.25,1.25), 
+			new THREE.MeshBasicMaterial({color:0x0000FF, map:texture, transparent:true, opacity:0.5}) 
+		);
+		meshC.position.y = 1.25/2;
+		markerRootC.add( meshC );
+
+		let markerRootKanji = new THREE.Group();
+		scene.add(markerRootKanji);
+		let markerControlsKanji = new THREEx.ArMarkerControls(arToolkitContext, markerRootKanji, {
+			type : 'pattern', patternUrl : "data/kanji.patt" ,
+		});
+		let geometryKanji = new THREE.CubeGeometry(1.25, 1.25, 1.25);
+		let materialKanji = new THREE.MeshBasicMaterial({color:0xcccccc, map:texture, transparent:true, opacity:0.5}); 
+		meshKanji = new THREE.Mesh( geometryKanji, materialKanji ); 
+	
+		meshKanji.position.y = 1.25/2;
+		markerRootKanji.add( meshKanji );
+
+
+	// }
 }
 
 
 function update()
 {
+	// Change Kanji cube color if other markers are visible
+	if ( markerRootA.visible == false && markerRootB.visible ==false && markerRootC.visible == false)
+		meshKanji.material.color.setHex ( 0xcccccc );
+	if ( markerRootA.visible == true && markerRootB.visible ==false && markerRootC.visible == false)
+		meshKanji.material.color.setHex ( 0xff0000 );
+	if ( markerRootA.visible == true && markerRootB.visible ==true && markerRootC.visible == false)
+		meshKanji.material.color.setHex ( 0xffff00 );
+	if ( markerRootA.visible == true && markerRootB.visible ==false && markerRootC.visible == true)
+		meshKanji.material.color.setHex ( 0xff00ff );
+	if ( markerRootA.visible == false && markerRootB.visible ==true && markerRootC.visible == true)
+		meshKanji.material.color.setHex ( 0x00ffff );
+	if ( markerRootA.visible == true && markerRootB.visible ==true && markerRootC.visible == true)
+		meshKanji.material.color.setHex ( 0xffffff );
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
