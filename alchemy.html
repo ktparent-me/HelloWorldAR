@@ -167,17 +167,21 @@ function initialize()
 function update()
 {
 	// Change Kanji cube color if other markers are visible
-	if ( markerRootA.visible == false && markerRootB.visible ==false && markerRootC.visible == false)
+	if ( markerRootA.visible == false && markerRootB.visible == false && markerRootC.visible == false)
 		meshKanji.material.color.setHex ( 0xcccccc );
-	if ( markerRootA.visible == true && markerRootB.visible ==false && markerRootC.visible == false)
+	if ( markerRootA.visible == true && markerRootB.visible == false && markerRootC.visible == false)
 		meshKanji.material.color.setHex ( 0xff0000 );
-	if ( markerRootA.visible == true && markerRootB.visible ==true && markerRootC.visible == false)
+	if ( markerRootA.visible == false && markerRootB.visible == true && markerRootC.visible == false)
+		meshKanji.material.color.setHex ( 0x00ff00 );
+	if ( markerRootA.visible == false && markerRootB.visible == false && markerRootC.visible == true)
+		meshKanji.material.color.setHex ( 0x00ff00 );		
+	if ( markerRootA.visible == true && markerRootB.visible == true && markerRootC.visible == false)
 		meshKanji.material.color.setHex ( 0xffff00 );
-	if ( markerRootA.visible == true && markerRootB.visible ==false && markerRootC.visible == true)
+	if ( markerRootA.visible == true && markerRootB.visible == false && markerRootC.visible == true)
 		meshKanji.material.color.setHex ( 0xff00ff );
-	if ( markerRootA.visible == false && markerRootB.visible ==true && markerRootC.visible == true)
+	if ( markerRootA.visible == false && markerRootB.visible == true && markerRootC.visible == true)
 		meshKanji.material.color.setHex ( 0x00ffff );
-	if ( markerRootA.visible == true && markerRootB.visible ==true && markerRootC.visible == true)
+	if ( markerRootA.visible == true && markerRootB.visible == true && markerRootC.visible == true)
 		meshKanji.material.color.setHex ( 0xffffff );
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
