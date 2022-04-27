@@ -154,7 +154,7 @@ function initialize()
 		let markerControlsKanji = new THREEx.ArMarkerControls(arToolkitContext, markerRootKanji, {
 			type : 'pattern', patternUrl : "data/kanji.patt" ,
 		});
-		let geometryKanji = new THREE.CubeGeometry(1.25, 1.25, 1.25);
+		let geometryKanji = new THREE.CubeGeometry(2, 2, 2);
 		let materialKanji = new THREE.MeshBasicMaterial({color:0xcccccc, map:texture, transparent:true, opacity:0.5}); 
 		meshKanji = new THREE.Mesh( geometryKanji, materialKanji ); 
 	
