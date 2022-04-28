@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>Hello, AR Cubes! v0.2</title>
+	<title>Hello, AR Cubes! v0.3</title>
 	<!-- include three.js library -->
 	<script src='js/three.js'></script>
 	<!-- include jsartookit -->
@@ -155,6 +155,18 @@ function initialize()
 		let markerControlsKanji = new THREEx.ArMarkerControls(arToolkitContext, markerRootKanji, {
 			type : 'pattern', patternUrl : "data/kanji.patt" ,
 		});
+	// interpolates from last position to create smoother transitions when moving.
+	// parameter lerp values near 0 are slow, near 1 are fast (instantaneous).
+		let smoothedRoot = new THREE.Group();
+		scene.add(smoothedRoot);
+		smoothedControls = new THREEx.ArSmoothedControls(smoothedRoot, {
+			lerpPosition: 0.8,
+			lerpQuaternion: 0.8,
+			lerpScale: 1,
+			// minVisibleDelay: 1,
+			// minUnvisibleDelay: 1,
+		});
+
 		let geometryKanji = new THREE.CubeGeometry(1.25, 1.25, 1.25);
 		let materialKanji = new THREE.MeshBasicMaterial({color:0xdddddd, map:texture, transparent:true, opacity:0.5}); 
 		meshKanji = new THREE.Mesh( geometryKanji, materialKanji ); 
