@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>Hello, AR Cubes! v0.4</title>
+	<title>Hello, AR Cubes! v0.5</title>
 	<!-- include three.js library -->
 	<script src='js/three.js'></script>
 	<!-- include jsartookit -->
@@ -32,6 +32,8 @@ var arToolkitSource, arToolkitContext, smoothedControls;
 var markerRootA, markerRootB, markerRootC, markerRootKanji;
 
 var meshA, meshB, meshC, meshKanji;
+	
+var grey = 0xeeeeee, red = 0xff0000, green = 0x00ff00, blue = 0x0000ff;
 
 initialize();
 animate();
@@ -186,10 +188,7 @@ function update()
 	visA = markerRootA.visible
 	visB = markerRootB.visible
 	visC = markerRootC.visible
-	grey = 0xeeeeee
-	red = 0xff0000
-	green = 0x00ff00
-	blue = 0x0000ff
+	
 	if ( visA == false && visB == false && visC == false)
 		meshKanji.material.color.setHex ( grey );
 	if ( visA == true && visB == false && visC == false)
