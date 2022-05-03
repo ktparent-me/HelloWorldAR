@@ -121,7 +121,7 @@ function initialize()
 	
 		let meshA = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:0xFF0000, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({color:red, map:texture, transparent:false}) 
 		);
 		meshA.rotation.x = -Math.PI/2;
 		markerRootA.add( meshA );
@@ -134,7 +134,7 @@ function initialize()
 	
 		let meshB = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:0x0000FF, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({color:blue, map:texture, transparent:false}) 
 		);
 		meshB.rotation.x = -Math.PI/2;
 		markerRootB.add( meshB );
@@ -147,7 +147,7 @@ function initialize()
 	
 		let meshC = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:0x00FF00, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({color:green, map:texture, transparent:false}) 
 		);
 		meshC.rotation.x = -Math.PI/2;
 		markerRootC.add( meshC );
@@ -172,7 +172,7 @@ function initialize()
 		});
 
 		let geometryKanji = new THREE.CubeGeometry(1.25, 1.25, 1.25);
-		let materialKanji = new THREE.MeshBasicMaterial({color:0xeeeeee, map:texture, transparent:true, opacity:0.5}); 
+		let materialKanji = new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:true, opacity:0.5}); 
 		meshKanji = new THREE.Mesh( geometryKanji, materialKanji ); 
 	
 		meshKanji.position.y = 1.25/2;
@@ -188,7 +188,6 @@ function update()
 	visA = markerRootA.visible
 	visB = markerRootB.visible
 	visC = markerRootC.visible
-	
 	if ( visA == false && visB == false && visC == false)
 		meshKanji.material.color.setHex ( grey );
 	if ( visA == true && visB == false && visC == false)
