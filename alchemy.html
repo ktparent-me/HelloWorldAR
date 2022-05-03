@@ -186,22 +186,26 @@ function update()
 	visA = markerRootA.visible
 	visB = markerRootB.visible
 	visC = markerRootC.visible
+	grey = 0xeeeeee
+	red = 0xff0000
+	green = 0x00ff00
+	blue = 0x0000ff
 	if ( visA == false && visB == false && visC == false)
-		meshKanji.material.color.setHex ( 0xeeeeee );
+		meshKanji.material.color.setHex ( grey );
 	if ( visA == true && visB == false && visC == false)
-		meshKanji.material.color.setHex ( 0xff0000 );
+		meshKanji.material.color.setHex ( red );
 	if ( visA == false && visB == true && visC == false)
-		meshKanji.material.color.setHex ( 0x0000ff );
+		meshKanji.material.color.setHex ( blue );
 	if ( visA == false && visB == false && visC == true)
-		meshKanji.material.color.setHex ( 0x00ff00 );		
+		meshKanji.material.color.setHex ( green );		
 	if ( visA == true && visB == true && visC == false)
-		meshKanji.material.color.setHex ( 0xff00ff );
+		meshKanji.material.color.setHex ( red + blue );
 	if ( visA == true && visB == false && visC == true)
-		meshKanji.material.color.setHex ( 0xffff00 );
+		meshKanji.material.color.setHex ( red + green );
 	if ( visA == false && visB == true && visC == true)
-		meshKanji.material.color.setHex ( 0x00ffff );
+		meshKanji.material.color.setHex ( green + blue );
 	if ( visA == true && visB == true && visC == true)
-		meshKanji.material.color.setHex ( 0xffffff );
+		meshKanji.material.color.setHex ( red + blue + green );
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
