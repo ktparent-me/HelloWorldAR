@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>Hello, AR Cubes! v0.6</title>
+	<title>Hello, AR Cubes! v0.7</title>
 	<!-- include three.js library -->
 	<script src='js/three.js'></script>
 	<!-- include jsartookit -->
@@ -29,11 +29,13 @@ var scene, camera, renderer, clock, deltaTime, totalTime;
 
 var arToolkitSource, arToolkitContext, smoothedControls;
 
-var markerRootA, markerRootB, markerRootC, markerRootKanji;
+var markerRootA, markerRootB, markerRootC, markerRootD, markerRootKanji;
 
 var meshA, meshB, meshC, meshKanji;
 	
 var grey = 0xeeeeee, red = 0xff0000, green = 0x00ff00, blue = 0x0000ff;
+
+var scale = 1.25;
 
 initialize();
 animate();
@@ -151,6 +153,19 @@ function initialize()
 		);
 		meshC.rotation.x = -Math.PI/2;
 		markerRootC.add( meshC );
+	
+		markerRootD = new THREE.Group();
+		scene.add(markerRootD);
+		let markerControlsC = new THREEx.ArMarkerControls(arToolkitContext, markerRootD, {
+			type : 'pattern', patternUrl : "data/letterD.patt" ,
+		});
+	
+		let meshD = new THREE.Mesh( 
+			new THREE.PlaneGeometry(1.3,1.3), 
+			new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:false}) 
+		);
+		meshD.rotation.x = -Math.PI/2;
+		markerRootD.add( meshD );
 
 		markerRootKanji = new THREE.Group();
 		scene.add(markerRootKanji);
@@ -171,7 +186,7 @@ function initialize()
 			 minUnvisibleDelay: 0.5,
 		});
 
-		let geometryKanji = new THREE.CubeGeometry(1.25, 1.25, 1.25);
+		let geometryKanji = new THREE.CubeGeometry(scale, scale, scale);
 		let materialKanji = new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:true, opacity:0.5}); 
 		meshKanji = new THREE.Mesh( geometryKanji, materialKanji ); 
 	
@@ -204,6 +219,15 @@ function update()
 		meshKanji.material.color.setHex ( green + blue );
 	if ( visA == true && visB == true && visC == true)
 		meshKanji.material.color.setHex ( red + blue + green );
+	
+	// Change scale if marker is visible
+	visScale = markerRootD.visible
+	if ( visScale == true)
+		scale = 2
+	if ( visScale == false)
+		scale = 1.25
+	meshKanji.scale.set ( scale, scale, scale )
+	
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
