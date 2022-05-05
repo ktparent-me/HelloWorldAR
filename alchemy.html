@@ -31,7 +31,7 @@ var arToolkitSource, arToolkitContext, smoothedControls;
 
 var markerRootA, markerRootB, markerRootC, markerRootD, markerRootKanji;
 
-var meshA, meshB, meshC, meshD, meshKanji;
+var meshA, meshB, meshC, meshD, meshKanjiCube, meshKanjiSphere;
 	
 var grey = 0x222222, red = 0xff0000, green = 0x00ff00, blue = 0x0000ff;
 
@@ -167,6 +167,19 @@ function initialize()
 		meshD.rotation.x = -Math.PI/2;
 		markerRootD.add( meshD );
 
+		markerRootF = new THREE.Group();
+		scene.add(markerRootF);
+		let markerControlsF = new THREEx.ArMarkerControls(arToolkitContext, markerRootF, {
+			type : 'pattern', patternUrl : "data/letterF.patt" ,
+		});
+	
+		let meshF = new THREE.Mesh( 
+			new THREE.PlaneGeometry(1.3,1.3), 
+			new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:false}) 
+		);
+		meshF.rotation.x = -Math.PI/2;
+		markerRootF.add( meshF );
+
 		markerRootKanji = new THREE.Group();
 		scene.add(markerRootKanji);
 
@@ -186,14 +199,22 @@ function initialize()
 			 minUnvisibleDelay: 0.5,
 		});
 
-		let geometryKanji = new THREE.CubeGeometry(1, 1, 1);
-		let materialKanji = new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:true, opacity:0.5}); 
-		meshKanji = new THREE.Mesh( geometryKanji, materialKanji ); 
-	
-		meshKanji.position.y = 1.25/2;
-		meshKanji.scale.set ( scale, scale, scale )
+		let geometryKanjiCube = new THREE.CubeGeometry(1, 1, 1);
+		let geometryKanjiSphere = new THREE.SphereGeometry(1, 32, 32);
+		let materialKanjiCube = new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:true, opacity:0.5});
+		let materialKanjiSphere = new THREE.MeshBasicMaterial({color:grey, transparent:true, opacity:0.5});  
+		meshKanjiCube = new THREE.Mesh( geometryKanjiCube, materialKanjiCube ); 
+		meshKanjiSphere = new THREE.Mesh( geometryKanjiSphere, materialKanjiSphere );
+
+		meshKanjiCube.position.y = 1.25/2;
+		meshKanjiSphere.position.y = 1.25/2;
+		meshKanjiCube.scale.set ( scale, scale, scale )
+		meshKanjiSphere.scale.set ( scale, scale, scale )
+
 		// markerRootKanji.add( meshKanji );
-		smoothedRoot.add( meshKanji );
+		smoothedRoot.add( meshKanjiCube );
+		smoothedRoot.add( meshKanjiSphere );
+		meshKanjiSphere.visible = false;
 
 }
 
@@ -204,30 +225,60 @@ function update()
 	visA = markerRootA.visible
 	visB = markerRootB.visible
 	visC = markerRootC.visible
-	if ( visA == false && visB == false && visC == false)
-		meshKanji.material.color.setHex ( grey );
-	if ( visA == true && visB == false && visC == false)
-		meshKanji.material.color.setHex ( red );
-	if ( visA == false && visB == true && visC == false)
-		meshKanji.material.color.setHex ( blue );
-	if ( visA == false && visB == false && visC == true)
-		meshKanji.material.color.setHex ( green );		
-	if ( visA == true && visB == true && visC == false)
-		meshKanji.material.color.setHex ( red + blue );
-	if ( visA == true && visB == false && visC == true)
-		meshKanji.material.color.setHex ( red + green );
-	if ( visA == false && visB == true && visC == true)
-		meshKanji.material.color.setHex ( green + blue );
-	if ( visA == true && visB == true && visC == true)
-		meshKanji.material.color.setHex ( red + blue + green );
-	
+	if ( visA == false && visB == false && visC == false) {
+		meshKanjiCube.material.color.setHex ( grey );
+		meshKanjiSphere.material.color.setHex ( grey );
+	};
+	if ( visA == true && visB == false && visC == false) {
+		meshKanjiCube.material.color.setHex ( red );
+		meshKanjiSphere.material.color.setHex ( red );
+	};
+	if ( visA == false && visB == true && visC == false) {
+		meshKanjiCube.material.color.setHex ( blue );
+		meshKanjiSphere.material.color.setHex ( blue );
+	};
+	if ( visA == false && visB == false && visC == true){
+		meshKanjiCube.material.color.setHex ( green );	
+		meshKanjiSphere.material.color.setHex ( green );
+	};		
+	if ( visA == true && visB == true && visC == false) {
+		meshKanjiCube.material.color.setHex ( red + blue );
+		meshKanjiSphere.material.color.setHex ( red + blue );
+	};
+	if ( visA == true && visB == false && visC == true) {
+		meshKanjiCube.material.color.setHex ( red + green );
+		meshKanjiSphere.material.color.setHex ( red + green );
+	};		
+	if ( visA == false && visB == true && visC == true) {
+		meshKanjiCube.material.color.setHex ( green + blue );
+		meshKanjiSphere.material.color.setHex ( green + blue );
+	};
+	if ( visA == true && visB == true && visC == true) {
+		meshKanjiCube.material.color.setHex ( red + blue + green );
+		meshKanjiSphere.material.color.setHex ( red + green + blue );
+	};
 	// Change scale if marker is visible
 	visScale = markerRootD.visible
 	if ( visScale == true)
 		scale = 2;
+		
 	if ( visScale == false)
 		scale = 1.25;
-	meshKanji.scale.set ( scale, scale, scale )
+
+	meshKanjiCube.scale.set ( scale, scale, scale )
+	meshKanjiSphere.scale.set ( scale, scale, scale )
+
+	// change Kanji to sphere if marker is visible
+	visSphere = markerRootF.visible
+	if ( visSphere == true ) {
+		meshKanjiSphere.visible = true;
+		meshKanjiCube.visible = false;
+	} 
+	else {
+		meshKanjiSphere.visible = false;
+		meshKanjiCube.visible = true;		
+	};
+		
 	
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
