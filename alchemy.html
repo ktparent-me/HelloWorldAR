@@ -180,6 +180,19 @@ function initialize()
 		meshF.rotation.x = -Math.PI/2;
 		markerRootF.add( meshF );
 
+		markerRootHiro = new THREE.Group();
+		scene.add(markerRootHiro);
+		let markerControlsHiro = new THREEx.ArMarkerControls(arToolkitContext, markerRootHiro, {
+			type : 'pattern', patternUrl : "data/hiro.patt" ,
+		});
+	
+		let meshHiro = new THREE.Mesh( 
+			new THREE.PlaneGeometry(1.3,1.3), 
+			new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:false}) 
+		);
+		meshHiro.rotation.x = -Math.PI/2;
+		markerRootHiro.add( meshHiro );
+
 		markerRootKanji = new THREE.Group();
 		scene.add(markerRootKanji);
 
@@ -215,6 +228,8 @@ function initialize()
 		smoothedRoot.add( meshKanjiCube );
 		smoothedRoot.add( meshKanjiSphere );
 		meshKanjiSphere.visible = false;
+
+		scene.fog = new THREE.FogExp2(0xffffff, 0.05);
 
 }
 
@@ -268,8 +283,8 @@ function update()
 	meshKanjiCube.scale.set ( scale, scale, scale )
 	meshKanjiSphere.scale.set ( scale, scale, scale )
 
-	// change Kanji to sphere if marker is visible
-	visSphere = markerRootF.visible
+	// change Kanji to sphere if Hiro marker is visible
+	visSphere = markerRootHiro.visible
 	if ( visSphere == true ) {
 		meshKanjiSphere.visible = true;
 		meshKanjiCube.visible = false;
@@ -278,8 +293,14 @@ function update()
 		meshKanjiSphere.visible = false;
 		meshKanjiCube.visible = true;		
 	};
-		
-	
+
+	//add fog if F marker is present	
+	visFog = markerRootF.visible
+	if (visFog == true)
+		scene.fog.density = 0.05
+	else
+		scene.fog.density = 0.0;
+
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
