@@ -54,7 +54,7 @@ function initialize()
 		antialias : true,
 		alpha: true
 	});
-	renderer.setClearColor(new THREE.Color('lightgrey'), 0)
+	renderer.setClearColor(new THREE.Color('white'), 0)
 	renderer.setSize( 640, 480 );
 	renderer.domElement.style.position = 'absolute'
 	renderer.domElement.style.top = '0px'
@@ -296,11 +296,13 @@ function update()
 
 	//add fog if F marker is present	
 	visFog = markerRootF.visible
-	if (visFog == true)
-		scene.fog.density = 0.05
-	else
+	if (visFog == true) {
+		scene.fog.density = 0.05;
+		renderer.setClearAlpha( 0.3 );
+	} else {
 		scene.fog.density = 0.0;
-
+		renderer.setClearAlpha( 0.0 );
+	};	
 	// update artoolkit on every frame
 	if ( arToolkitSource.ready !== false )
 		arToolkitContext.update( arToolkitSource.domElement );
