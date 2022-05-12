@@ -36,6 +36,8 @@ var meshA, meshB, meshC, meshD, meshKanji;
 var grey = 0xeeeeee, red = 0xff0000, green = 0x00ff00, blue = 0x0000ff;
 
 var scale = 1.25;
+	
+var redVis = 0, blueVis = 0, greenVis = 0;
 
 initialize();
 animate();
@@ -220,6 +222,9 @@ function update()
 		meshKanji.material.color.setHex ( green + blue );
 	if ( visA == true && visB == true && visC == true)
 		meshKanji.material.color.setHex ( red + blue + green );
+	
+	if ( redVis == 1 || blueVis == 1 || greenVis == 1)
+		meshKanji.material.color.setHex ( (red*redVis) + (blue*blueVis) + (green*greenVis) );
 	
 	// Change scale if marker is visible
 	visScale = markerRootD.visible
