@@ -203,28 +203,18 @@ function initialize()
 function update()
 {
 	// Change Kanji cube color if other markers are visible
-	visA = markerRootA.visible
-	visB = markerRootB.visible
-	visC = markerRootC.visible
-	if ( visA == false && visB == false && visC == false)
-		meshKanji.material.color.setHex ( grey );
-	if ( visA == true && visB == false && visC == false)
-		meshKanji.material.color.setHex ( red );
-	if ( visA == false && visB == true && visC == false)
-		meshKanji.material.color.setHex ( blue );
-	if ( visA == false && visB == false && visC == true)
-		meshKanji.material.color.setHex ( green );		
-	if ( visA == true && visB == true && visC == false)
-		meshKanji.material.color.setHex ( red + blue );
-	if ( visA == true && visB == false && visC == true)
-		meshKanji.material.color.setHex ( red + green );
-	if ( visA == false && visB == true && visC == true)
-		meshKanji.material.color.setHex ( green + blue );
-	if ( visA == true && visB == true && visC == true)
-		meshKanji.material.color.setHex ( red + blue + green );
+	redVis = 0; blueVis = 0; greenVis = 0
+	if ( markerRootA.visible )
+		redVis = 1;
+	if ( markerRootB.visible )
+		blueVis = 1;
+	if ( visC = markerRootC.visible )
+		greenVis = 1;
 	
 	if ( redVis == 1 || blueVis == 1 || greenVis == 1)
 		meshKanji.material.color.setHex ( (red*redVis) + (blue*blueVis) + (green*greenVis) );
+	else 
+		meshKanji.material.color.setHex ( grey );
 	
 	// Change scale if marker is visible
 	visScale = markerRootD.visible
