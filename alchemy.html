@@ -215,7 +215,8 @@ function initialize()
 		let geometryKanjiCube = new THREE.CubeGeometry(1, 1, 1);
 		let geometryKanjiSphere = new THREE.SphereGeometry(1, 32, 32);
 		let materialKanjiCube = new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:true, opacity:0.5});
-		let materialKanjiSphere = new THREE.MeshBasicMaterial({color:grey, transparent:true, opacity:0.5});  
+		let globeTexture = loader.load( 'images/earth-sphere.jpg', render );
+		let materialKanjiSphere = new THREE.MeshBasicMaterial({map:globeTexture, opacity:1.0});  
 		meshKanjiCube = new THREE.Mesh( geometryKanjiCube, materialKanjiCube ); 
 		meshKanjiSphere = new THREE.Mesh( geometryKanjiSphere, materialKanjiSphere );
 
@@ -229,7 +230,13 @@ function initialize()
 		smoothedRoot.add( meshKanjiSphere );
 		meshKanjiSphere.visible = false;
 
+		// add fog 
 		scene.fog = new THREE.FogExp2(0xffffff, 0.05);
+		
+		// add point light
+		let pointLight = new THREE.PointLight( 0xffffff, 1, 100 );
+		pointLight.position.set(3,9,6);
+		smoothedRoot.add( pointLight );
 
 }
 
@@ -242,7 +249,7 @@ function update()
 	visC = markerRootC.visible
 	if ( visA == false && visB == false && visC == false) {
 		meshKanjiCube.material.color.setHex ( grey );
-		meshKanjiSphere.material.color.setHex ( grey );
+		meshKanjiSphere.material.color.setHex ( 0xFFFFFF );
 	};
 	if ( visA == true && visB == false && visC == false) {
 		meshKanjiCube.material.color.setHex ( red );
@@ -288,6 +295,7 @@ function update()
 	if ( visSphere == true ) {
 		meshKanjiSphere.visible = true;
 		meshKanjiCube.visible = false;
+		meshKanjiSphere.rotation.y += 0.01;
 	} 
 	else {
 		meshKanjiSphere.visible = false;
