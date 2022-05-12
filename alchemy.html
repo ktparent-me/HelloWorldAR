@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<title>Hello, AR Cubes! v0.8</title>
+	<title>Hello, AR Cubes! v0.9</title>
 	<!-- include three.js library -->
 	<script src='js/three.js'></script>
 	<!-- include jsartookit -->
@@ -36,6 +36,8 @@ var meshA, meshB, meshC, meshD, meshKanjiCube, meshKanjiSphere;
 var grey = 0x222222, red = 0xff0000, green = 0x00ff00, blue = 0x0000ff;
 
 var scale = 1.25;
+	
+var redVis = 0, blueVis = 0, greenVis = 0;
 
 initialize();
 animate();
@@ -244,41 +246,19 @@ function initialize()
 function update()
 {
 	// Change Kanji cube color if other markers are visible
-	visA = markerRootA.visible
-	visB = markerRootB.visible
-	visC = markerRootC.visible
-	if ( visA == false && visB == false && visC == false) {
-		meshKanjiCube.material.color.setHex ( grey );
-		meshKanjiSphere.material.color.setHex ( 0xFFFFFF );
-	};
-	if ( visA == true && visB == false && visC == false) {
-		meshKanjiCube.material.color.setHex ( red );
-		meshKanjiSphere.material.color.setHex ( red );
-	};
-	if ( visA == false && visB == true && visC == false) {
-		meshKanjiCube.material.color.setHex ( blue );
-		meshKanjiSphere.material.color.setHex ( blue );
-	};
-	if ( visA == false && visB == false && visC == true){
-		meshKanjiCube.material.color.setHex ( green );	
-		meshKanjiSphere.material.color.setHex ( green );
-	};		
-	if ( visA == true && visB == true && visC == false) {
-		meshKanjiCube.material.color.setHex ( red + blue );
-		meshKanjiSphere.material.color.setHex ( red + blue );
-	};
-	if ( visA == true && visB == false && visC == true) {
-		meshKanjiCube.material.color.setHex ( red + green );
-		meshKanjiSphere.material.color.setHex ( red + green );
-	};		
-	if ( visA == false && visB == true && visC == true) {
-		meshKanjiCube.material.color.setHex ( green + blue );
-		meshKanjiSphere.material.color.setHex ( green + blue );
-	};
-	if ( visA == true && visB == true && visC == true) {
-		meshKanjiCube.material.color.setHex ( red + blue + green );
-		meshKanjiSphere.material.color.setHex ( red + green + blue );
-	};
+	redVis = 0; blueVis = 0; greenVis = 0;
+	if ( markerRootA.visible )
+		redVis = 1;
+	if ( markerRootB.visible )
+		blueVis = 1;
+	if ( markerRootC.visible )
+		greenVis = 1;
+	
+	if ( redVis == 1 || blueVis == 1 || greenVis == 1)
+		meshKanji.material.color.setHex ( (red*redVis) + (blue*blueVis) + (green*greenVis) );
+	else 
+		meshKanji.material.color.setHex ( grey );
+	
 	// Change scale if marker is visible
 	visScale = markerRootD.visible
 	if ( visScale == true)
