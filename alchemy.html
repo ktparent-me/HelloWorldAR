@@ -33,7 +33,7 @@ var markerRootA, markerRootB, markerRootC, markerRootD, markerRootKanji;
 
 var meshA, meshB, meshC, meshD, meshKanjiCube, meshKanjiSphere;
 	
-var grey = 0x222222, red = 0xff0000, green = 0x00ff00, blue = 0x0000ff;
+var grey = 0x222222, red = 0xff0000, green = 0x00ff00, blue = 0x0000ff, white = 0xFFFFFF;
 
 var scale = 1.25;
 	
@@ -254,10 +254,14 @@ function update()
 	if ( markerRootC.visible )
 		greenVis = 1;
 	
-	if ( redVis == 1 || blueVis == 1 || greenVis == 1)
-		meshKanji.material.color.setHex ( (red*redVis) + (blue*blueVis) + (green*greenVis) );
-	else 
-		meshKanji.material.color.setHex ( grey );
+	if ( redVis == 1 || blueVis == 1 || greenVis == 1){
+		meshKanjiCube.material.color.setHex ( (red*redVis) + (blue*blueVis) + (green*greenVis) );
+		meshKanjiSphere.material.color.setHex ( (red*redVis) + (blue*blueVis) + (green*greenVis) );
+	}
+	else {
+		meshKanjiCube.material.color.setHex ( grey );
+		meshKanjiSphere.material.color.setHex ( white );
+	};
 	
 	// Change scale if marker is visible
 	visScale = markerRootD.visible
