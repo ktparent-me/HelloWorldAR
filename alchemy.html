@@ -214,14 +214,14 @@ function initialize()
 
 		let geometryKanjiCube = new THREE.CubeGeometry(1, 1, 1);
 		let geometryKanjiSphere = new THREE.SphereGeometry(1, 32, 32);
-		let materialKanjiCube = new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:true, opacity:0.5});
+		let materialKanjiCube = new THREE.MeshBasicMaterial({color:grey, map:texture, side:THREE.DoubleSide, transparent:true, opacity:0.5});
 		let globeTexture = loader.load( 'images/earth-sphere.jpg', render );
 		let materialKanjiSphere = new THREE.MeshBasicMaterial({map:globeTexture, opacity:1.0});  
 		meshKanjiCube = new THREE.Mesh( geometryKanjiCube, materialKanjiCube ); 
 		meshKanjiSphere = new THREE.Mesh( geometryKanjiSphere, materialKanjiSphere );
 
-		meshKanjiCube.position.y = scale/2;
-		meshKanjiSphere.position.y = scale/2;
+		meshKanjiCube.position.y = (scale/2)+.1;
+		meshKanjiSphere.position.y = (scale/2)+.1;
 		meshKanjiCube.scale.set ( scale, scale, scale )
 		meshKanjiSphere.scale.set ( scale, scale, scale )
 
@@ -289,8 +289,8 @@ function update()
 
 	meshKanjiCube.scale.set ( scale, scale, scale );
 	meshKanjiSphere.scale.set ( scale, scale, scale );
-	meshKanjiCube.position.y = scale/2;
-	meshKanjiSphere.position.y = scale/2;
+	meshKanjiCube.position.y = (scale/2)+.1;
+	meshKanjiSphere.position.y = (scale/2)+.1;
 
 	// change Kanji to sphere if Hiro marker is visible
 	visSphere = markerRootHiro.visible
