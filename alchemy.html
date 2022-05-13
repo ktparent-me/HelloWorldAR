@@ -114,9 +114,10 @@ function initialize()
 	////////////////////////////////////////////////////////////
 
 	let loader = new THREE.TextureLoader();
-	let textureD = loader.load( 'arrow.jpg', render );
-	let textureF = loader.load( 'fog.png', render );
-	let textureHiro = loader.load( 'earth.jpg', render );
+	let texture = loader.load( 'images/border.png', render );
+	let textureD = loader.load( 'images/arrow.png', render );
+	let textureF = loader.load( 'images/fog.png.png', render );
+	let textureHiro = loader.load( 'images/earth.jpg', render );
 		
 
 		markerRootA = new THREE.Group();
