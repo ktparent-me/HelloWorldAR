@@ -108,8 +108,9 @@ function initialize()
 	////////////////////////////////////////////////////////////
 
 	let loader = new THREE.TextureLoader();
-	let texture = loader.load( 'arrow.jpg', render );
-	let texture = loader.load( 'fog.jpg', render );
+	let textureA = loader.load( 'arrow.jpg', render );
+	let textureB = loader.load( 'fog.png', render );
+	let textureC = loader.load( 'earth'.jpg', render );
 		
 
 		markerRootA = new THREE.Group();
@@ -118,9 +119,10 @@ function initialize()
 			type : 'pattern', patternUrl : "data/letterA.patt" ,
 		});
 	
+	//arrow
 		let meshA = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:0xFF0000, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({color:0xFF0000, map:textureA, transparent:false}) 
 		);
 		meshA.rotation.x = -Math.PI/2;
 		markerRootA.add( meshA );
@@ -133,7 +135,7 @@ function initialize()
 	
 		let meshB = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:0x0000FF, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({color:0x0000FF, map:textureB, transparent:false}) 
 		);
 		meshB.rotation.x = -Math.PI/2;
 		markerRootB.add( meshB );
@@ -146,7 +148,7 @@ function initialize()
 	
 		let meshC = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:0x00FF00, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({color:0x00FF00, map:textureC, transparent:false}) 
 		);
 		meshC.rotation.x = -Math.PI/2;
 		markerRootC.add( meshC );
