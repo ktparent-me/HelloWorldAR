@@ -114,7 +114,9 @@ function initialize()
 	////////////////////////////////////////////////////////////
 
 	let loader = new THREE.TextureLoader();
-	let texture = loader.load( 'images/border.png', render );
+	let textureD = loader.load( 'arrow.jpg', render );
+	let textureF = loader.load( 'fog.png', render );
+	let textureHiro = loader.load( 'earth.jpg', render );
 		
 
 		markerRootA = new THREE.Group();
@@ -123,6 +125,7 @@ function initialize()
 			type : 'pattern', patternUrl : "data/letterA.patt" ,
 		});
 	
+	//arrow
 		let meshA = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
 			new THREE.MeshBasicMaterial({color:red, map:texture, transparent:false}) 
@@ -164,7 +167,7 @@ function initialize()
 	
 		let meshD = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({ map:textureD, transparent:false}) 
 		);
 		meshD.rotation.x = -Math.PI/2;
 		markerRootD.add( meshD );
@@ -177,7 +180,7 @@ function initialize()
 	
 		let meshF = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({map:textureF, transparent:false}) 
 		);
 		meshF.rotation.x = -Math.PI/2;
 		markerRootF.add( meshF );
@@ -190,7 +193,7 @@ function initialize()
 	
 		let meshHiro = new THREE.Mesh( 
 			new THREE.PlaneGeometry(1.3,1.3), 
-			new THREE.MeshBasicMaterial({color:grey, map:texture, transparent:false}) 
+			new THREE.MeshBasicMaterial({map:textureHiro, transparent:false}) 
 		);
 		meshHiro.rotation.x = -Math.PI/2;
 		markerRootHiro.add( meshHiro );
@@ -262,7 +265,7 @@ function update()
 		meshKanjiCube.material.color.setHex ( grey );
 		meshKanjiSphere.material.color.setHex ( white );
 	};
-	
+
 	// Change scale if marker is visible
 	visScale = markerRootD.visible
 	if ( visScale == true)
